@@ -1,37 +1,41 @@
 use super::Component;
 
 pub struct View<T>
-    where T: Component
+where
+    T: Component,
 {
-    child: T
+    child: T,
 }
 
 impl<T> View<T>
-    where T: Component
+where
+    T: Component,
 {
     pub fn new(child: T) -> View<T> {
-        View {
-            child
-        }
+        View { child }
     }
 }
 
 impl<T> Component for View<T>
-    where T: Component
+where
+    T: Component,
 {
     fn html(&self) -> String {
-        format!(r#"
+        format!(
+            r#"
             <html>
                 <head>
                     <title>Mule</title>
                 </head>
                 <body>{}</body>
             </html>
-        "#, self.child.html())
+        "#,
+            self.child.html()
+        )
     }
 
     fn css(&self) -> String {
-        String::from("")
+        self.child.css()
     }
 }
 
@@ -42,10 +46,17 @@ mod tests {
 
     #[test]
     fn it_works() {
-        use std::io::prelude::*;
+        use crate::components::text::FontStyle;
         use crate::components::text::Text;
+        use crate::style::text::Color;
+        use std::io::prelude::*;
 
-        let bar = View::new(Text::new("thing")).render();
+        let bar = View::new(
+            Text::new("thing")
+                .with_font(FontStyle::Heading1)
+                .with_color(Color::Blue),
+        )
+        .render();
 
         let mut file = std::fs::File::create("foo.html").unwrap();
         file.write_all(bar.as_bytes()).unwrap();

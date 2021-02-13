@@ -3,7 +3,7 @@ use std::fmt;
 use crate::html;
 
 use crate::style::font::{Font, FontWeight};
-use crate::style::text::{Text as TextStyle, Color};
+use crate::style::text::{Color, Text as TextStyle};
 use crate::style::CSS;
 
 use super::Component;
@@ -55,7 +55,7 @@ pub struct Text {
     class: String,
     html_tag: HTMLTextTag,
     font: Font,
-    text_style: TextStyle
+    text_style: TextStyle,
 }
 
 impl Text {
@@ -70,9 +70,7 @@ impl Text {
                 family: String::from("Lato"),
                 design: String::from("sans-serif"),
             },
-            text_style: TextStyle {
-                color: Color::Red
-            }
+            text_style: TextStyle { color: Color::Red },
         }
     }
 
@@ -146,6 +144,11 @@ impl Component for Text {
     }
 
     fn css(&self) -> String {
-        format!(".{} {{{}{}}}", self.class, self.font.css(), self.text_style.css())
+        format!(
+            ".{} {{{}{}}}",
+            self.class,
+            self.font.css(),
+            self.text_style.css()
+        )
     }
 }

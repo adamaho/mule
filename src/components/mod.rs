@@ -9,12 +9,15 @@ pub trait Component {
         let html = self.html();
         let css = self.css();
 
-        format!(r#"
+        format!(
+            r#"
             {}
             <style>
             {}
             </style>
-        "#, html, css)
+        "#,
+            html, css
+        )
     }
 }
 

@@ -7,7 +7,7 @@ pub enum Color {
     Yellow,
     Green,
     Blue,
-    Purple
+    Purple,
 }
 
 impl CSS for Color {
@@ -18,7 +18,7 @@ impl CSS for Color {
             Color::Yellow => "yellow",
             Color::Green => "green",
             Color::Blue => "blue",
-            Color::Purple => "purple"
+            Color::Purple => "purple",
         };
 
         format!("color: {};", color)
@@ -28,24 +28,24 @@ impl CSS for Color {
 pub enum Alignment {
     Center,
     Left,
-    Right
+    Right,
 }
 
 pub enum Decoration {
     Underline,
     Overline,
-    LineThrough
+    LineThrough,
 }
 
 pub enum Transform {
     Uppercase,
     Lowercase,
-    Capitalize
+    Capitalize,
 }
 
 #[derive(Debug)]
 pub struct Text {
-    pub color: Color
+    pub color: Color,
 }
 
 impl CSS for Text {
