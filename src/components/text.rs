@@ -1,3 +1,4 @@
+use nanoid::nanoid;
 use std::fmt;
 
 use crate::html;
@@ -48,10 +49,9 @@ impl fmt::Display for HTMLTextTag {
     }
 }
 
-/// an attempt at text
 #[derive(Debug)]
 pub struct Text {
-    content: String,
+    child: String,
     class: String,
     html_tag: HTMLTextTag,
     font: Font,
@@ -61,9 +61,9 @@ pub struct Text {
 impl Text {
     pub fn new(content: &str) -> Text {
         Text {
-            content: content.to_string(),
+            child: content.to_string(),
             html_tag: HTMLTextTag::P,
-            class: String::from("cleasss"),
+            class: nanoid!(5),
             font: Font {
                 size: 1.0,
                 weight: FontWeight::Regular,
@@ -138,9 +138,9 @@ impl Component for Text {
     fn html(&self) -> String {
         let tag = &self.html_tag;
         let class = &self.class;
-        let content = &self.content;
+        let child = &self.child;
 
-        html!(tag, class, content)
+        html!(tag, class, child)
     }
 
     fn css(&self) -> String {
@@ -152,3 +152,6 @@ impl Component for Text {
         )
     }
 }
+
+// gives an html
+// gives css

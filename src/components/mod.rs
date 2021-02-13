@@ -1,24 +1,10 @@
 pub mod text;
 pub mod view;
+pub mod vstack;
 
 pub trait Component {
     fn html(&self) -> String;
     fn css(&self) -> String;
-
-    fn render(&self) -> String {
-        let html = self.html();
-        let css = self.css();
-
-        format!(
-            r#"
-            {}
-            <style>
-            {}
-            </style>
-        "#,
-            html, css
-        )
-    }
 }
 
 #[macro_export]
