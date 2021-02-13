@@ -1,4 +1,3 @@
-use nanoid::nanoid;
 use std::fmt;
 
 use crate::html;
@@ -6,6 +5,7 @@ use crate::html;
 use crate::style::font::{Font, FontWeight};
 use crate::style::text::{Color, Text as TextStyle};
 use crate::style::CSS;
+use crate::utils;
 
 use super::Component;
 
@@ -63,7 +63,7 @@ impl Text {
         Text {
             child: content.to_string(),
             html_tag: HTMLTextTag::P,
-            class: nanoid!(5),
+            class: utils::make_class(),
             font: Font {
                 size: 1.0,
                 weight: FontWeight::Regular,

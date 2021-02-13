@@ -45,18 +45,20 @@ mod tests {
         use crate::style::text::Color;
         use std::io::prelude::*;
 
-        let page = View::new(
-            VStack::new(vec![
-                Box::new(
-                    Text::new("This is Fun I think")
-                        .with_font(FontStyle::Heading1)
-                        .with_color(Color::Green),
-                ),
-                Box::new(VStack::new(vec![
-                    Box::new(Text::new("This is a paragraph").with_color(Color::Red)),
-                    Box::new(Text::new("This is a paragraph").with_color(Color::Blue)),
-                ])
+        let page = View::new(VStack::new(vec![
+            Box::new(
+                Text::new("This is Fun I think")
+                    .with_font(FontStyle::Heading1)
+                    .with_color(Color::Green),
             ),
+            Box::new(VStack::new(vec![
+                Box::new(
+                    Text::new("This is a paragraph")
+                        .with_font(FontStyle::Heading3)
+                        .with_color(Color::Red),
+                ),
+                Box::new(Text::new("This is a paragraph").with_font(FontStyle::Code).with_color(Color::Blue)),
+            ])),
         ]))
         .render();
 
