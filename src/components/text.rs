@@ -1,7 +1,9 @@
-use indoc::formatdoc;
 use std::fmt;
 
+use crate::html;
+
 use crate::style::font::{Font, FontWeight};
+use crate::style::text::{Text as TextStyle, Color};
 use crate::style::CSS;
 
 use super::Component;
@@ -53,6 +55,7 @@ pub struct Text {
     class: String,
     html_tag: HTMLTextTag,
     font: Font,
+    text_style: TextStyle
 }
 
 impl Text {
@@ -67,6 +70,9 @@ impl Text {
                 family: String::from("Lato"),
                 design: String::from("sans-serif"),
             },
+            text_style: TextStyle {
+                color: Color::Red
+            }
         }
     }
 
@@ -123,24 +129,24 @@ impl Text {
             }
         }
     }
+
+    pub fn with_color(mut self, color: Color) -> Text {
+        self.text_style.color = color;
+        self
+    }
 }
 
 impl Component for Text {
     fn html(&self) -> String {
-        String::from(format!(
-            "<{} class=\"{}\">{}</{}>",
-            self.html_tag, self.class, self.content, self.html_tag
-        ))
+        let tag = &self.html_tag;
+        let class = &self.class;
+        let content = &self.content;
+
+        html!(tag, class, content)
     }
 
     fn css(&self) -> String {
-        formatdoc! {r#"
-.{} {{
-    {}
-}}
-        "#,
-            self.class, self.font.css()
-        }
+        format!(".{} {{{}{}}}", self.class, self.font.css(), self.text_style.css())
     }
 }
 
@@ -153,17 +159,11 @@ mod tests {
     fn it_works() {
         use std::io::prelude::*;
 
-        let foo = Text::new("Hello World")
-            .with_font(FontStyle::Paragraph)
-            .html();
         let bar = Text::new("Hello World")
-            .with_font(FontStyle::Paragraph)
-            .css();
+            .with_font(FontStyle::Heading1)
+            .render();
 
         let mut file = std::fs::File::create("foo.html").unwrap();
-        file.write_all(foo.as_bytes()).unwrap();
-
-        let mut file = std::fs::File::create("foo.css").unwrap();
         file.write_all(bar.as_bytes()).unwrap();
     }
 }
