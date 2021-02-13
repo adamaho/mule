@@ -1,4 +1,5 @@
 pub mod text;
+pub mod view;
 
 pub trait Component {
     fn html(&self) -> String;

@@ -149,21 +149,3 @@ impl Component for Text {
         format!(".{} {{{}{}}}", self.class, self.font.css(), self.text_style.css())
     }
 }
-
-#[cfg(test)]
-mod tests {
-
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        use std::io::prelude::*;
-
-        let bar = Text::new("Hello World")
-            .with_font(FontStyle::Heading1)
-            .render();
-
-        let mut file = std::fs::File::create("foo.html").unwrap();
-        file.write_all(bar.as_bytes()).unwrap();
-    }
-}
