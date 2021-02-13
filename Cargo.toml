@@ -1,10 +1,6 @@
-[package]
-name = "thing"
-version = "0.1.0"
-authors = ["adamaho"]
-edition = "2018"
+[workspace]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-nanoid = "0.3.0"
+members = [
+    "core",
+    "playground"
+]

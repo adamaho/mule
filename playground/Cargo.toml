@@ -1,0 +1,11 @@
+[package]
+name = "playground"
+version = "0.1.0"
+authors = ["adamaho <adam.aho@hey.com>"]
+edition = "2018"
+
+[dependencies]
+core = { path = "../core" }
+tokio = { version = "1", features = ["full"] }
+warp = "0.3"
+

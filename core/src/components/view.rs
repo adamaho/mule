@@ -57,7 +57,11 @@ mod tests {
                         .with_font(FontStyle::Heading3)
                         .with_color(Color::Red),
                 ),
-                Box::new(Text::new("This is a paragraph").with_font(FontStyle::Code).with_color(Color::Blue)),
+                Box::new(
+                    Text::new("This is a paragraph")
+                        .with_font(FontStyle::Code)
+                        .with_color(Color::Blue),
+                ),
             ])),
         ]))
         .render();
