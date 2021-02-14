@@ -1,16 +1,18 @@
-
+use super::Component;
 use crate::html;
 use crate::utils::make_class;
-use super::Component;
 
 pub struct VStack {
     children: Vec<Box<dyn Component>>,
-    class: String
+    class: String,
 }
 
 impl VStack {
     pub fn new(children: Vec<Box<dyn Component>>) -> VStack {
-        VStack { children, class: make_class() }
+        VStack {
+            children,
+            class: make_class(),
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 use super::CSS;
- 
+
 pub enum TextColor {
     Red,
     Orange,
@@ -8,7 +8,7 @@ pub enum TextColor {
     Blue,
     Purple,
     Black,
-    White
+    White,
 }
 
 impl CSS for TextColor {
@@ -46,12 +46,11 @@ impl CSS for TextAlignment {
     }
 }
 
-
 pub enum TextDecoration {
     Underline,
     Overline,
     LineThrough,
-    None
+    None,
 }
 
 impl CSS for TextDecoration {
@@ -60,7 +59,7 @@ impl CSS for TextDecoration {
             TextDecoration::Underline => "underline",
             TextDecoration::Overline => "overline",
             TextDecoration::LineThrough => "line-through",
-            TextDecoration::None => "none"
+            TextDecoration::None => "none",
         };
 
         format!("text-decoration: {};", decoration)
@@ -71,7 +70,7 @@ pub enum TextTransform {
     Uppercase,
     Lowercase,
     Capitalize,
-    None
+    None,
 }
 
 impl CSS for TextTransform {
@@ -80,7 +79,7 @@ impl CSS for TextTransform {
             TextTransform::Uppercase => "uppercase",
             TextTransform::Lowercase => "lowercase",
             TextTransform::Capitalize => "capitalize",
-            TextTransform::None => "none"
+            TextTransform::None => "none",
         };
 
         format!("text-decoration: {};", transform)

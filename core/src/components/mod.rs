@@ -2,9 +2,12 @@ pub mod text;
 pub mod view;
 pub mod vstack;
 
-///
+/// Implemented to provide a struct or enum the ability to render custom html or css.
 pub trait Component {
+    /// html
     fn html(&self) -> String;
+
+    /// css
     fn css(&self) -> String;
 }
 

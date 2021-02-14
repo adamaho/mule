@@ -1,6 +1,6 @@
 use core::components::text::{FontStyle, Text};
 use core::components::vstack::VStack;
-use core::style::text::{TextColor, TextAlignment};
+use core::style::text::{TextAlignment, TextColor};
 
 pub struct MyCustomComponent;
 

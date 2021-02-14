@@ -9,26 +9,28 @@ use crate::utils;
 
 use super::Component;
 
-///
-/// # Text
-/// 
 /// A component that displays one or more lines of text.
-/// 
-/// 
+///
+///
 /// ## Example
 /// ```
 /// Text::new("This is an example");
 /// ```
 ///
-/// 
+///
 pub struct Text {
     child: String,
     class: String,
     html_tag: HTMLTextTag,
-    style: Style
+    style: Style,
 }
 
 impl Text {
+    /// Create a new `Text` element.
+    ///
+    /// ```
+    /// Text::new("This is a text element")
+    /// ```
     pub fn new(content: &str) -> Text {
         Text {
             child: content.to_string(),
@@ -44,26 +46,18 @@ impl Text {
                 color: TextColor::Black,
                 alignment: TextAlignment::Leading,
                 decoration: TextDecoration::None,
-                transform: TextTransform::None
-            }
+                transform: TextTransform::None,
+            },
         }
     }
 
-    /// Modify the semantics and styling of the text element
-    /// 
-    /// For example. If we wanted to change the semantics to match that of a heading
-    /// we can do the following:
-    /// 
+    /// Modify the semantics and styling of the text element using `with_text_type`. For example, 
+    /// If we wanted to change the semantics to match that of a heading we can do the following:
+    ///
     /// ```
     /// Text::new("Text as Heading").with_text_type(TextStyle::Heading1)
     /// ```
-    /// 
-    /// Which renders the following html:
-    /// 
-    /// ```html
-    /// <h1 class="my_h1">Text as Heading</h1>
-    /// ```
-    /// 
+    ///
     pub fn with_text_type(mut self, text_type: TextType) -> Text {
         match text_type {
             TextType::Heading1 => {
@@ -118,11 +112,23 @@ impl Text {
         }
     }
 
+    /// Modify the color of the text based on the default color palette. 
+    /// 
+    /// ```
+    /// Text::new("Text with Color").with_color(TextColor::Red)
+    /// ```
+    ///
     pub fn with_color(mut self, color: TextColor) -> Text {
         self.style.color = color;
         self
     }
 
+    /// Modify the alignment of the text
+    ///
+    /// ```
+    /// Text::new("Text with Color").with_alignment(TextAlignment::Center)
+    /// ```
+    ///
     pub fn with_alignment(mut self, alignment: TextAlignment) -> Text {
         self.style.alignment = alignment;
         self
@@ -156,7 +162,7 @@ struct Style {
     color: TextColor,
     alignment: TextAlignment,
     decoration: TextDecoration,
-    transform: TextTransform
+    transform: TextTransform,
 }
 
 /// The semantic text type for the text element
