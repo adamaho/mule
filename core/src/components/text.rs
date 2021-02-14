@@ -153,5 +153,7 @@ impl Component for Text {
     }
 }
 
-// gives an html
-// gives css
+// text
+// alignment
+// color
+// padding

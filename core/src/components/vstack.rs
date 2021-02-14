@@ -1,24 +1,31 @@
+
+use crate::html;
+use crate::utils::make_class;
 use super::Component;
 
 pub struct VStack {
-    pub children: Vec<Box<dyn Component>>,
+    children: Vec<Box<dyn Component>>,
+    class: String
 }
 
 impl VStack {
     pub fn new(children: Vec<Box<dyn Component>>) -> VStack {
-        VStack { children }
+        VStack { children, class: make_class() }
     }
 }
 
 impl Component for VStack {
     fn html(&self) -> String {
-        let mut html = String::new();
+        let mut content = String::new();
 
         for child in self.children.iter() {
-            html.push_str(&format!("{}\n", child.html()));
+            content.push_str(&format!("{}\n", child.html()));
         }
 
-        html
+        let tag = "div";
+        let class = &self.class;
+
+        html!(tag, class, content)
     }
 
     fn css(&self) -> String {
@@ -31,3 +38,6 @@ impl Component for VStack {
         css
     }
 }
+
+// alignment
+// padding
