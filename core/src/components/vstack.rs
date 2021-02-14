@@ -37,6 +37,6 @@ impl Component for VStack {
             css.push_str(&format!("{}\n", child.css()));
         }
 
-        css
+        format!(".{} {{ height: 100%; }} {}", self.class, css)
     }
 }

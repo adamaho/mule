@@ -6,5 +6,5 @@ pub fn make_class() -> String {
         's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     ];
 
-    nanoid!(6, &alphabet)
+    format!("mule-{}", nanoid!(6, &alphabet))
 }

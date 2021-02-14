@@ -11,6 +11,11 @@ pub trait Component {
     fn css(&self) -> String;
 }
 
+/// Trait that is required to convert to css
+pub trait CSS {
+    fn css(&self) -> String;
+}
+
 #[macro_export]
 macro_rules! html {
     ($tag:ident, $class:ident, $content:ident) => {

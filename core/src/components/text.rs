@@ -1,13 +1,9 @@
 use std::fmt;
+use std::default::Default;
 
 use crate::html;
-
-use crate::style::font::{Font, FontWeight};
-use crate::style::text::{TextAlignment, TextColor, TextDecoration, TextTransform};
-use crate::style::CSS;
 use crate::utils;
-
-use super::Component;
+use super::{Component, CSS};
 
 /// A component that displays one or more lines of text.
 ///
@@ -16,8 +12,6 @@ use super::Component;
 /// ```
 /// Text::new("This is an example");
 /// ```
-///
-///
 pub struct Text {
     child: String,
     class: String,
@@ -57,7 +51,6 @@ impl Text {
     /// ```
     /// Text::new("Text as Heading").with_text_type(TextStyle::Heading1)
     /// ```
-    ///
     pub fn with_text_type(mut self, text_type: TextType) -> Text {
         match text_type {
             TextType::Heading1 => {
@@ -136,6 +129,8 @@ impl Text {
 }
 
 impl Component for Text {
+
+    /// Render the HTMl output of a Text element
     fn html(&self) -> String {
         let tag = &self.html_tag;
         let class = &self.class;
@@ -144,9 +139,10 @@ impl Component for Text {
         html!(tag, class, child)
     }
 
+    /// Render the CSS output of a Text element
     fn css(&self) -> String {
         format!(
-            ".{} {{{}{}{}{}{}}}",
+            ".{} {{margin:0;{}{}{}{}{}}}",
             self.class,
             self.style.font.css(),
             self.style.color.css(),
@@ -157,6 +153,7 @@ impl Component for Text {
     }
 }
 
+/// The style of the 
 struct Style {
     font: Font,
     color: TextColor,
@@ -205,3 +202,150 @@ impl fmt::Display for HTMLTextTag {
         write!(f, "{}", tag)
     }
 }
+
+pub enum TextColor {
+    Red,
+    Orange,
+    Yellow,
+    Green,
+    Blue,
+    Purple,
+    Black,
+    White,
+}
+
+impl CSS for TextColor {
+    fn css(&self) -> String {
+        let color = match *self {
+            TextColor::Red => "red",
+            TextColor::Orange => "orange",
+            TextColor::Yellow => "yellow",
+            TextColor::Green => "green",
+            TextColor::Blue => "blue",
+            TextColor::Purple => "purple",
+            TextColor::Black => "black",
+            TextColor::White => "white",
+        };
+
+        format!("color: {};", color)
+    }
+}
+
+pub enum TextAlignment {
+    Center,
+    Leading,
+    Trailing,
+}
+
+impl CSS for TextAlignment {
+    fn css(&self) -> String {
+        let alignment = match *self {
+            TextAlignment::Center => "center",
+            TextAlignment::Leading => "left",
+            TextAlignment::Trailing => "right",
+        };
+
+        format!("text-align: {};", alignment)
+    }
+}
+
+pub enum TextDecoration {
+    Underline,
+    Overline,
+    LineThrough,
+    None,
+}
+
+impl CSS for TextDecoration {
+    fn css(&self) -> String {
+        let decoration = match *self {
+            TextDecoration::Underline => "underline",
+            TextDecoration::Overline => "overline",
+            TextDecoration::LineThrough => "line-through",
+            TextDecoration::None => "none",
+        };
+
+        format!("text-decoration: {};", decoration)
+    }
+}
+
+pub enum TextTransform {
+    Uppercase,
+    Lowercase,
+    Capitalize,
+    None,
+}
+
+impl CSS for TextTransform {
+    fn css(&self) -> String {
+        let transform = match *self {
+            TextTransform::Uppercase => "uppercase",
+            TextTransform::Lowercase => "lowercase",
+            TextTransform::Capitalize => "capitalize",
+            TextTransform::None => "none",
+        };
+
+        format!("text-decoration: {};", transform)
+    }
+}
+
+/// All possible font weights
+#[derive(Debug)]
+pub enum FontWeight {
+    Heavy,
+    Bold,
+    Semibold,
+    Medium,
+    Regular,
+    Light,
+    Thin,
+    Ultralight,
+}
+
+// default font weight
+impl Default for FontWeight {
+    fn default() -> FontWeight {
+        FontWeight::Regular
+    }
+}
+
+// convert font weight to css
+impl CSS for FontWeight {
+    fn css(&self) -> String {
+        let weight = match *self {
+            FontWeight::Heavy => "800",
+            FontWeight::Bold => "700",
+            FontWeight::Semibold => "600",
+            FontWeight::Medium => "500",
+            FontWeight::Regular => "400",
+            FontWeight::Light => "300",
+            FontWeight::Thin => "200",
+            FontWeight::Ultralight => "100",
+        };
+
+        String::from(format!("font-weight: {}", weight))
+    }
+}
+
+// all font values
+pub struct Font {
+    pub size: f32,
+    pub weight: FontWeight,
+    pub family: String,
+    pub design: String,
+}
+
+// convert font to css
+impl CSS for Font {
+    fn css(&self) -> String {
+        let css = format!(
+            "font-size: {}rem;{};font-family: {}, {};",
+            self.size,
+            self.weight.css(),
+            self.family,
+            self.design
+        );
+        String::from(css)
+    }
+}
+
