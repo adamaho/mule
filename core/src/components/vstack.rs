@@ -38,6 +38,3 @@ impl Component for VStack {
         css
     }
 }
-
-// alignment
-// padding

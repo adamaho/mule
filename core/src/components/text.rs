@@ -9,55 +9,18 @@ use crate::utils;
 
 use super::Component;
 
-struct Style {
-    font: Font,
-    color: TextColor,
-    alignment: TextAlignment,
-    decoration: TextDecoration,
-    transform: TextTransform
-}
-
-#[derive(Debug)]
-pub enum FontStyle {
-    Heading1,
-    Heading2,
-    Heading3,
-    Heading4,
-    Heading5,
-    Heading6,
-    Paragraph,
-    Code,
-}
-
-#[derive(Debug)]
-pub enum HTMLTextTag {
-    H1,
-    H2,
-    H3,
-    H4,
-    H5,
-    H6,
-    P,
-    Code,
-}
-
-impl fmt::Display for HTMLTextTag {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let tag = match *self {
-            HTMLTextTag::H1 => String::from("h1"),
-            HTMLTextTag::H2 => String::from("h2"),
-            HTMLTextTag::H3 => String::from("h3"),
-            HTMLTextTag::H4 => String::from("h4"),
-            HTMLTextTag::H5 => String::from("h5"),
-            HTMLTextTag::H6 => String::from("h6"),
-            HTMLTextTag::P => String::from("p"),
-            HTMLTextTag::Code => String::from("code"),
-        };
-        write!(f, "{}", tag)
-    }
-}
-
-
+///
+/// # Text
+/// 
+/// A component that displays one or more lines of text.
+/// 
+/// 
+/// ## Example
+/// ```
+/// Text::new("This is an example");
+/// ```
+///
+/// 
 pub struct Text {
     child: String,
     class: String,
@@ -83,55 +46,69 @@ impl Text {
                 decoration: TextDecoration::None,
                 transform: TextTransform::None
             }
-
         }
     }
 
-    pub fn with_font(mut self, font_style: FontStyle) -> Text {
-        match font_style {
-            FontStyle::Heading1 => {
+    /// Modify the semantics and styling of the text element
+    /// 
+    /// For example. If we wanted to change the semantics to match that of a heading
+    /// we can do the following:
+    /// 
+    /// ```
+    /// Text::new("Text as Heading").with_text_type(TextStyle::Heading1)
+    /// ```
+    /// 
+    /// Which renders the following html:
+    /// 
+    /// ```html
+    /// <h1 class="my_h1">Text as Heading</h1>
+    /// ```
+    /// 
+    pub fn with_text_type(mut self, text_type: TextType) -> Text {
+        match text_type {
+            TextType::Heading1 => {
                 self.html_tag = HTMLTextTag::H1;
                 self.style.font.size = 3.0;
                 self.style.font.weight = FontWeight::Heavy;
                 self
             }
-            FontStyle::Heading2 => {
+            TextType::Heading2 => {
                 self.html_tag = HTMLTextTag::H2;
                 self.style.font.size = 2.25;
                 self.style.font.weight = FontWeight::Bold;
                 self
             }
-            FontStyle::Heading3 => {
+            TextType::Heading3 => {
                 self.html_tag = HTMLTextTag::H3;
                 self.style.font.size = 1.875;
                 self.style.font.weight = FontWeight::Bold;
                 self
             }
-            FontStyle::Heading4 => {
+            TextType::Heading4 => {
                 self.html_tag = HTMLTextTag::H4;
                 self.style.font.size = 1.5;
                 self.style.font.weight = FontWeight::Bold;
                 self
             }
-            FontStyle::Heading5 => {
+            TextType::Heading5 => {
                 self.html_tag = HTMLTextTag::H5;
                 self.style.font.size = 1.25;
                 self.style.font.weight = FontWeight::Semibold;
                 self
             }
-            FontStyle::Heading6 => {
+            TextType::Heading6 => {
                 self.html_tag = HTMLTextTag::H6;
                 self.style.font.size = 1.125;
                 self.style.font.weight = FontWeight::Semibold;
                 self
             }
-            FontStyle::Paragraph => {
+            TextType::Paragraph => {
                 self.html_tag = HTMLTextTag::P;
                 self.style.font.size = 1.0;
                 self.style.font.weight = FontWeight::Regular;
                 self
             }
-            FontStyle::Code => {
+            TextType::Code => {
                 self.html_tag = HTMLTextTag::Code;
                 self.style.font.size = 1.0;
                 self.style.font.weight = FontWeight::Regular;
@@ -171,5 +148,54 @@ impl Component for Text {
             self.style.transform.css(),
             self.style.decoration.css()
         )
+    }
+}
+
+struct Style {
+    font: Font,
+    color: TextColor,
+    alignment: TextAlignment,
+    decoration: TextDecoration,
+    transform: TextTransform
+}
+
+/// The semantic text type for the text element
+pub enum TextType {
+    Heading1,
+    Heading2,
+    Heading3,
+    Heading4,
+    Heading5,
+    Heading6,
+    Paragraph,
+    Code,
+}
+
+/// The HTML tag to describe the text element
+enum HTMLTextTag {
+    H1,
+    H2,
+    H3,
+    H4,
+    H5,
+    H6,
+    P,
+    Code,
+}
+
+/// Convert the enum to an HTML tag string
+impl fmt::Display for HTMLTextTag {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let tag = match *self {
+            HTMLTextTag::H1 => String::from("h1"),
+            HTMLTextTag::H2 => String::from("h2"),
+            HTMLTextTag::H3 => String::from("h3"),
+            HTMLTextTag::H4 => String::from("h4"),
+            HTMLTextTag::H5 => String::from("h5"),
+            HTMLTextTag::H6 => String::from("h6"),
+            HTMLTextTag::P => String::from("p"),
+            HTMLTextTag::Code => String::from("code"),
+        };
+        write!(f, "{}", tag)
     }
 }
