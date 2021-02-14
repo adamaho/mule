@@ -3,11 +3,19 @@ use std::fmt;
 use crate::html;
 
 use crate::style::font::{Font, FontWeight};
-use crate::style::text::{Color, Text as TextStyle};
+use crate::style::text::{TextAlignment, TextColor, TextDecoration, TextTransform};
 use crate::style::CSS;
 use crate::utils;
 
 use super::Component;
+
+struct Style {
+    font: Font,
+    color: TextColor,
+    alignment: TextAlignment,
+    decoration: TextDecoration,
+    transform: TextTransform
+}
 
 #[derive(Debug)]
 pub enum FontStyle {
@@ -49,13 +57,12 @@ impl fmt::Display for HTMLTextTag {
     }
 }
 
-#[derive(Debug)]
+
 pub struct Text {
     child: String,
     class: String,
     html_tag: HTMLTextTag,
-    font: Font,
-    text_style: TextStyle,
+    style: Style
 }
 
 impl Text {
@@ -64,13 +71,19 @@ impl Text {
             child: content.to_string(),
             html_tag: HTMLTextTag::P,
             class: utils::make_class(),
-            font: Font {
-                size: 1.0,
-                weight: FontWeight::Regular,
-                family: String::from("Lato"),
-                design: String::from("sans-serif"),
-            },
-            text_style: TextStyle { color: Color::Red },
+            style: Style {
+                font: Font {
+                    size: 1.0,
+                    weight: FontWeight::Regular,
+                    family: String::from("Lato"),
+                    design: String::from("sans-serif"),
+                },
+                color: TextColor::Black,
+                alignment: TextAlignment::Leading,
+                decoration: TextDecoration::None,
+                transform: TextTransform::None
+            }
+
         }
     }
 
@@ -78,58 +91,63 @@ impl Text {
         match font_style {
             FontStyle::Heading1 => {
                 self.html_tag = HTMLTextTag::H1;
-                self.font.size = 3.0;
-                self.font.weight = FontWeight::Heavy;
+                self.style.font.size = 3.0;
+                self.style.font.weight = FontWeight::Heavy;
                 self
             }
             FontStyle::Heading2 => {
                 self.html_tag = HTMLTextTag::H2;
-                self.font.size = 2.25;
-                self.font.weight = FontWeight::Bold;
+                self.style.font.size = 2.25;
+                self.style.font.weight = FontWeight::Bold;
                 self
             }
             FontStyle::Heading3 => {
                 self.html_tag = HTMLTextTag::H3;
-                self.font.size = 1.875;
-                self.font.weight = FontWeight::Bold;
+                self.style.font.size = 1.875;
+                self.style.font.weight = FontWeight::Bold;
                 self
             }
             FontStyle::Heading4 => {
                 self.html_tag = HTMLTextTag::H4;
-                self.font.size = 1.5;
-                self.font.weight = FontWeight::Bold;
+                self.style.font.size = 1.5;
+                self.style.font.weight = FontWeight::Bold;
                 self
             }
             FontStyle::Heading5 => {
                 self.html_tag = HTMLTextTag::H5;
-                self.font.size = 1.25;
-                self.font.weight = FontWeight::Semibold;
+                self.style.font.size = 1.25;
+                self.style.font.weight = FontWeight::Semibold;
                 self
             }
             FontStyle::Heading6 => {
                 self.html_tag = HTMLTextTag::H6;
-                self.font.size = 1.125;
-                self.font.weight = FontWeight::Semibold;
+                self.style.font.size = 1.125;
+                self.style.font.weight = FontWeight::Semibold;
                 self
             }
             FontStyle::Paragraph => {
                 self.html_tag = HTMLTextTag::P;
-                self.font.size = 1.0;
-                self.font.weight = FontWeight::Regular;
+                self.style.font.size = 1.0;
+                self.style.font.weight = FontWeight::Regular;
                 self
             }
             FontStyle::Code => {
                 self.html_tag = HTMLTextTag::Code;
-                self.font.size = 1.0;
-                self.font.weight = FontWeight::Regular;
-                self.font.family = String::from("monospace");
+                self.style.font.size = 1.0;
+                self.style.font.weight = FontWeight::Regular;
+                self.style.font.family = String::from("monospace");
                 self
             }
         }
     }
 
-    pub fn with_color(mut self, color: Color) -> Text {
-        self.text_style.color = color;
+    pub fn with_color(mut self, color: TextColor) -> Text {
+        self.style.color = color;
+        self
+    }
+
+    pub fn with_alignment(mut self, alignment: TextAlignment) -> Text {
+        self.style.alignment = alignment;
         self
     }
 }
@@ -145,15 +163,13 @@ impl Component for Text {
 
     fn css(&self) -> String {
         format!(
-            ".{} {{{}{}}}",
+            ".{} {{{}{}{}{}{}}}",
             self.class,
-            self.font.css(),
-            self.text_style.css()
+            self.style.font.css(),
+            self.style.color.css(),
+            self.style.alignment.css(),
+            self.style.transform.css(),
+            self.style.decoration.css()
         )
     }
 }
-
-// text
-// alignment
-// color
-// padding

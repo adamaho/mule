@@ -1,55 +1,88 @@
 use super::CSS;
-
-#[derive(Debug)]
-pub enum Color {
+ 
+pub enum TextColor {
     Red,
     Orange,
     Yellow,
     Green,
     Blue,
     Purple,
+    Black,
+    White
 }
 
-impl CSS for Color {
+impl CSS for TextColor {
     fn css(&self) -> String {
         let color = match *self {
-            Color::Red => "red",
-            Color::Orange => "orange",
-            Color::Yellow => "yellow",
-            Color::Green => "green",
-            Color::Blue => "blue",
-            Color::Purple => "purple",
+            TextColor::Red => "red",
+            TextColor::Orange => "orange",
+            TextColor::Yellow => "yellow",
+            TextColor::Green => "green",
+            TextColor::Blue => "blue",
+            TextColor::Purple => "purple",
+            TextColor::Black => "black",
+            TextColor::White => "white",
         };
 
         format!("color: {};", color)
     }
 }
 
-pub enum Alignment {
+pub enum TextAlignment {
     Center,
-    Left,
-    Right,
+    Leading,
+    Trailing,
 }
 
-pub enum Decoration {
+impl CSS for TextAlignment {
+    fn css(&self) -> String {
+        let alignment = match *self {
+            TextAlignment::Center => "center",
+            TextAlignment::Leading => "left",
+            TextAlignment::Trailing => "right",
+        };
+
+        format!("text-align: {};", alignment)
+    }
+}
+
+
+pub enum TextDecoration {
     Underline,
     Overline,
     LineThrough,
+    None
 }
 
-pub enum Transform {
+impl CSS for TextDecoration {
+    fn css(&self) -> String {
+        let decoration = match *self {
+            TextDecoration::Underline => "underline",
+            TextDecoration::Overline => "overline",
+            TextDecoration::LineThrough => "line-through",
+            TextDecoration::None => "none"
+        };
+
+        format!("text-decoration: {};", decoration)
+    }
+}
+
+pub enum TextTransform {
     Uppercase,
     Lowercase,
     Capitalize,
+    None
 }
 
-#[derive(Debug)]
-pub struct Text {
-    pub color: Color,
-}
-
-impl CSS for Text {
+impl CSS for TextTransform {
     fn css(&self) -> String {
-        self.color.css()
+        let transform = match *self {
+            TextTransform::Uppercase => "uppercase",
+            TextTransform::Lowercase => "lowercase",
+            TextTransform::Capitalize => "capitalize",
+            TextTransform::None => "none"
+        };
+
+        format!("text-decoration: {};", transform)
     }
 }
