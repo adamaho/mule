@@ -1,4 +1,5 @@
 use super::Component;
+use crate::theme::Color;
 
 pub struct View<T>
 where
@@ -6,6 +7,7 @@ where
 {
     child: T,
     title: String,
+    background: Color
 }
 
 impl<T> View<T>
@@ -16,12 +18,19 @@ where
         View {
             child,
             title: String::from("title"),
+            background: Color::Gray50
         }
     }
 
     /// Change the document title of the page
     pub fn with_title(mut self, title: &str) -> View<T> {
         self.title = String::from(title);
+        self
+    }
+
+
+    pub fn with_background(mut self, color: Color) -> View<T> {
+        self.background = color;
         self
     }
 
@@ -44,13 +53,20 @@ where
                     body {{
                         height: 100%;
                         margin: 0;
+                        background: {};
                     }}
+
+                    * {{
+                        box-sizing: border-box;
+                    }}
+
                     {}
                 </style>
             </html>
         "#,
             self.title,
             self.child.html(),
+            self.background.hex(),
             self.child.css()
         )
     }

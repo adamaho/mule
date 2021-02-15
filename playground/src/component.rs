@@ -1,4 +1,4 @@
-use core::components::text::{Text, TextAlignment, TextColor, TextType};
+use core::components::text::{Text, TextAlignment, TextType};
 use core::components::vstack::VStack;
 use core::components::Component;
 
@@ -22,7 +22,6 @@ impl MyCustomComponent {
             Box::new(
                 Text::new("Mule")
                     .with_text_type(TextType::Heading1)
-                    .with_color(TextColor::Green)
                     .with_alignment(TextAlignment::Center),
             ),
             write_paragraphs(),

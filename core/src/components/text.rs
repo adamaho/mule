@@ -2,6 +2,7 @@ use std::default::Default;
 use std::fmt;
 
 use super::{Component, CSS};
+use crate::theme::Color;
 use crate::html;
 use crate::utils;
 
@@ -37,7 +38,7 @@ impl Text {
                     family: String::from("Lato"),
                     design: String::from("sans-serif"),
                 },
-                color: TextColor::Black,
+                color: Color::Gray50,
                 alignment: TextAlignment::Leading,
                 decoration: TextDecoration::None,
                 transform: TextTransform::None,
@@ -105,23 +106,11 @@ impl Text {
         }
     }
 
-    /// Modify the color of the text based on the default color palette.
-    ///
-    /// ```
-    /// Text::new("Text with Color").with_color(TextColor::Red)
-    /// ```
-    ///
-    pub fn with_color(mut self, color: TextColor) -> Text {
+    pub fn with_color(mut self, color: Color) -> Text {
         self.style.color = color;
         self
     }
 
-    /// Modify the alignment of the text
-    ///
-    /// ```
-    /// Text::new("Text with Color").with_alignment(TextAlignment::Center)
-    /// ```
-    ///
     pub fn with_alignment(mut self, alignment: TextAlignment) -> Text {
         self.style.alignment = alignment;
         self
@@ -141,10 +130,10 @@ impl Component for Text {
     /// Render the CSS output of a Text element
     fn css(&self) -> String {
         format!(
-            ".{} {{margin:0;{}{}{}{}{}}}",
+            ".{} {{margin:0;color:{};{}{}{}{}}}",
             self.class,
+            self.style.color.hex(),
             self.style.font.css(),
-            self.style.color.css(),
             self.style.alignment.css(),
             self.style.transform.css(),
             self.style.decoration.css()
@@ -155,7 +144,7 @@ impl Component for Text {
 /// The style of the
 struct Style {
     font: Font,
-    color: TextColor,
+    color: Color,
     alignment: TextAlignment,
     decoration: TextDecoration,
     transform: TextTransform,
@@ -199,34 +188,6 @@ impl fmt::Display for HTMLTextTag {
             HTMLTextTag::Code => String::from("code"),
         };
         write!(f, "{}", tag)
-    }
-}
-
-pub enum TextColor {
-    Red,
-    Orange,
-    Yellow,
-    Green,
-    Blue,
-    Purple,
-    Black,
-    White,
-}
-
-impl CSS for TextColor {
-    fn css(&self) -> String {
-        let color = match *self {
-            TextColor::Red => "red",
-            TextColor::Orange => "orange",
-            TextColor::Yellow => "yellow",
-            TextColor::Green => "green",
-            TextColor::Blue => "blue",
-            TextColor::Purple => "purple",
-            TextColor::Black => "black",
-            TextColor::White => "white",
-        };
-
-        format!("color: {};", color)
     }
 }
 
