@@ -5,7 +5,7 @@ where
     T: Component,
 {
     child: T,
-    title: String
+    title: String,
 }
 
 impl<T> View<T>
@@ -13,7 +13,10 @@ where
     T: Component,
 {
     pub fn new(child: T) -> View<T> {
-        View { child, title: String::from("title") }
+        View {
+            child,
+            title: String::from("title"),
+        }
     }
 
     /// Change the document title of the page

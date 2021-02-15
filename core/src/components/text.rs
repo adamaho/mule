@@ -1,9 +1,9 @@
-use std::fmt;
 use std::default::Default;
+use std::fmt;
 
+use super::{Component, CSS};
 use crate::html;
 use crate::utils;
-use super::{Component, CSS};
 
 /// A component that displays one or more lines of text.
 ///
@@ -45,7 +45,7 @@ impl Text {
         }
     }
 
-    /// Modify the semantics and styling of the text element using `with_text_type`. For example, 
+    /// Modify the semantics and styling of the text element using `with_text_type`. For example,
     /// If we wanted to change the semantics to match that of a heading we can do the following:
     ///
     /// ```
@@ -105,8 +105,8 @@ impl Text {
         }
     }
 
-    /// Modify the color of the text based on the default color palette. 
-    /// 
+    /// Modify the color of the text based on the default color palette.
+    ///
     /// ```
     /// Text::new("Text with Color").with_color(TextColor::Red)
     /// ```
@@ -129,7 +129,6 @@ impl Text {
 }
 
 impl Component for Text {
-
     /// Render the HTMl output of a Text element
     fn html(&self) -> String {
         let tag = &self.html_tag;
@@ -153,7 +152,7 @@ impl Component for Text {
     }
 }
 
-/// The style of the 
+/// The style of the
 struct Style {
     font: Font,
     color: TextColor,
@@ -348,4 +347,3 @@ impl CSS for Font {
         String::from(css)
     }
 }
-

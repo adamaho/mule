@@ -1,6 +1,6 @@
-use core::components::Component;
-use core::components::text::{Text, TextType, TextColor, TextAlignment};
+use core::components::text::{Text, TextAlignment, TextColor, TextType};
 use core::components::vstack::VStack;
+use core::components::Component;
 
 pub struct MyCustomComponent;
 
@@ -8,7 +8,9 @@ pub fn write_paragraphs() -> Box<VStack> {
     let mut paragraphs: Vec<Box<dyn Component>> = Vec::new();
 
     for _ in 0..10 {
-        paragraphs.push(Box::new(Text::new("this is a paragraph").with_alignment(TextAlignment::Center)));
+        paragraphs.push(Box::new(
+            Text::new("this is a paragraph").with_alignment(TextAlignment::Center),
+        ));
     }
 
     Box::new(VStack::new(paragraphs))
